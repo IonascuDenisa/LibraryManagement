@@ -101,7 +101,7 @@ public class Author {
 
     }
 
-    public void printbook(){
+    public void printBooks(){
         for(Book i:books){
                 System.out.println("ID of the book is: "+i.getId());
                 System.out.println("Title of the book is: "+i.getTitle());
@@ -116,6 +116,7 @@ public class Author {
                 System.out.println("Digital: "+i.isDigitalAvailable());
 
         }
+
 
     }
 }

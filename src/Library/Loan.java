@@ -35,4 +35,8 @@ public class Loan {
     public void setLibrarian(Librarian librarian) {
         this.librarian = librarian;
     }
+
+    public void SetAvailability(){
+        book.setNumberOfCopiesAvailable(book.getNumberOfCopiesAvailable()-1);
+    }
 }
