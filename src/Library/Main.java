@@ -14,14 +14,12 @@
 // books orderd by title or search book by title
 // add new book
 // add new loan
-//
+// add employee
 
 package Library;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 public class Main {
@@ -29,9 +27,9 @@ public class Main {
     public static void main(String[] args) {
 
         Employee lib1 = new Librarian("ana", "32021","unirii", BigDecimal.valueOf(23663));
-        Employee lib2 = new Librarian("mara", "32021","unirii", BigDecimal.valueOf(230033));
-        Employee r3 = new Registrator("cara", "32021","unirii", BigDecimal.valueOf(23453));
-        Employee r4 =  new Registrator("cara", "32021","unirii", BigDecimal.valueOf(23453));
+        Employee lib2 = new Librarian("mara", "32021","unirii", BigDecimal.valueOf(2300939));
+        Employee r3 = new Registrator("cara", "32021","unirii", BigDecimal.valueOf(230053));
+        Employee r4 =  new Registrator("para", "32021","unirii", BigDecimal.valueOf(2345377));
 
         List<Employee> employees = new ArrayList<>();
         //List<Registrator> registrators = new ArrayList<>();
@@ -41,15 +39,36 @@ public class Main {
         employees.add(r3);
         employees.add(r4);
 
-        Iterator<Employee> l =employees.iterator();
-
-        while(l.hasNext()) {
-           l.next().print();
+        for (Employee employee : employees) {
+           // employee.print();
         }
 
+        Book book1=new Book(3,"Poeme","poezii",500,false);
+        Book book2=new Book(2,"Sarmanul Dionis","nuvela",200,true);
+
+
+        Book book3=new Book(1,"Abecedar","manual scolar",160,false);
+
+        List<Author> authors = new ArrayList<>();
+
+        List <Book> books = new ArrayList<>();
+        books.add(book1);
+        books.add(book2);
+        books.add(book3);
 
 
 
+        Author author1= new Author("Mihai Eminescu","Romantic",1850,1889, books.subList(0,2));
+        Author author2=new Author("Cleopatra Mihailescu",null,0,0,books.subList(2,3));
+        Author author3=new Author("Tudora Pitila",null, 0,0,books.subList(2,3));
 
-    }
+        authors.add(author1);
+        authors.add(author2);
+        authors.add(author3);
+
+        for(Author a: authors) {
+            a.printbook();
+        }
+
+  }
 }

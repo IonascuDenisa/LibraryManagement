@@ -4,14 +4,14 @@ import java.math.BigDecimal;
 
 public class Registrator extends Employee{
 
-    private static int deskNumber;
+    private int deskNumber;
 
-    static int indexDesk=0;
+    private static int indexDesk=0;
 
     public Registrator(String name, String phoneNumber, String address, BigDecimal salary) {
         super(name, phoneNumber, address, salary);
         indexDesk++;
-        this.deskNumber = indexDesk;
+        deskNumber = indexDesk;
     }
 
     public int getDeskNumber() {
