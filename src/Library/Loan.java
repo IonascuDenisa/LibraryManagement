@@ -1,15 +1,21 @@
 package Library;
 
+import java.util.Date;
+
 public class Loan {
 
     private Book book;
     private Client client;
     private Librarian librarian;
+   /* private Date date;
+    private Date dueDate;*/
 
-    public Loan(Book book, Client client, Librarian librarian) {
+    public Loan(Book book, Client client, Librarian librarian/*, Date date, Date dueDate*/) {
         this.book = book;
         this.client = client;
         this.librarian = librarian;
+       /* this.date = date;
+        this.dueDate = dueDate;*/
     }
 
     public Book getBook() {
@@ -37,6 +43,14 @@ public class Loan {
     }
 
     public void SetAvailability(){
+
         book.setNumberOfCopiesAvailable(book.getNumberOfCopiesAvailable()-1);
+    }
+
+    public void print(){
+        System.out.println("Cartea imprumutata este:");book.shortPrint();
+        System.out.println("Imprumutata de:"+ client.getName());
+        System.out.println("Imprumut realizat de:" + librarian.getName());
+
     }
 }

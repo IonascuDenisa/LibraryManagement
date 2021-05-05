@@ -8,11 +8,14 @@ public class Registrator extends Employee{
 
     private static int indexDesk=0;
 
+    public Registrator(){}
     public Registrator(String name, String phoneNumber, String address, BigDecimal salary) {
         super(name, phoneNumber, address, salary);
         indexDesk++;
         deskNumber = indexDesk;
     }
+
+
 
     public int getDeskNumber() {
         return deskNumber;

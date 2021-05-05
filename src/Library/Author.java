@@ -1,24 +1,24 @@
 package Library;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
-public class Author {
+public class Author implements Sort{
 
     private String name;
     private String literaryMovement; // if the book it is not literar then this field will be null
     private Boolean isAlive;
     private int birthYear;  // this field can be 0 if there is no info about the author
     private int deathYear; // if the author is alive, the value will be 0;
-    //private Book[] books;
-    private List<Book> books ;
 
-    public Author(String name, String literaryMovement, int birthYear, int deathYear, List<Book> books) {
+    public Author(){}
+    public Author(String name, String literaryMovement, int birthYear, int deathYear) {
         this.name = name;
         this.literaryMovement = literaryMovement;
         this.birthYear = birthYear;
         this.deathYear = deathYear;
-        this.books = books;
         if( (deathYear == 0) && (birthYear!=0) )
             this.isAlive=true;
         else if((deathYear != 0) && (birthYear!=0))
@@ -65,14 +65,6 @@ public class Author {
         this.deathYear = deathYear;
     }
 
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
-    }
-
     public void printAuthor(){
         System.out.println("The name of the author is: "+name);
         System.out.println("He/She was: "+ literaryMovement);
@@ -80,9 +72,23 @@ public class Author {
             System.out.println("Alive: no info");
         else
             System.out.println("Alive: "+ isAlive);
-        System.out.println("Number of books written:"+books.size());
+        //System.out.println("Number of books written:"+books.size());
     }
-    public void printOneBook(int idCheck){
+
+    @Override
+    public void AlphabeticalSort(List<Book> b, List<Author> a, int s) {
+        if(!a.isEmpty()){
+            Collections.sort(a, new Comparator<Author>() {
+                @Override
+                public int compare(Author o1,Author o2) {
+                    return o1.getName().compareTo(o2.getName());
+                }
+            });
+        }
+    }
+
+
+   /* public void printOneBook(int idCheck){
         for(Book i:books){
             if(i.getId() == idCheck){
                 System.out.println("ID of the book is: "+i.getId());
@@ -119,4 +125,7 @@ public class Author {
 
 
     }
+    */
+
+
 }

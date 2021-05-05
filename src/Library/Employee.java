@@ -1,8 +1,9 @@
 package Library;
 
 import java.math.BigDecimal;
+import java.util.List;
 
-public class Employee extends Person{
+public class Employee extends Person implements SearchEmployee{
 
     protected int employeeID;
     protected BigDecimal salary;
@@ -28,6 +29,7 @@ public class Employee extends Person{
         this.salary = salary;
     }
 
+    public Employee(){}
     @Override
     public void print(){
         super.print();
@@ -36,5 +38,53 @@ public class Employee extends Person{
     }
 
 
-}
+    @Override
+    public Employee SearchId(List<Employee> e, int idToFind) {
+        for(Employee emp:e)
+        {
+            if(emp.employeeID == idToFind)
+                return emp;
+        }
+        return null;
+    }
 
+    @Override
+    public Employee SearchByDesk(List<Employee> e, int desk) {
+        for(Employee emp:e)
+        {
+            if(emp instanceof Registrator){
+                Employee reg= new Registrator();
+                reg=emp;
+                Registrator plm=new Registrator();
+                plm=(Registrator) reg;
+                if(plm.getDeskNumber()==desk)
+                    return  (Employee)plm;
+            }
+        }
+        return null;
+
+    }
+
+    @Override
+    public Employee SearchByOffice(List<Employee> e, int office) {
+        for(Employee p:e)
+        {
+            if(p instanceof Librarian){
+                Employee lib= new Librarian();
+                lib=p;
+                Librarian lib2=new Librarian();
+                lib2=(Librarian) lib;
+                if(lib2.getOfficeNumber()==office)
+                    return  (Employee) lib2;
+            }
+        }
+        return null;
+    }
+}
+/*
+    Employee e = new Employee();
+
+    Employee reg = new Registrator("cara", "32021","unirii", BigDecimal.valueOf(2000));
+    Registrator plm=new Registrator();
+
+    plm=(Registrator)reg;*/

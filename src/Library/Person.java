@@ -14,6 +14,9 @@ public abstract class Person {
         this.address = address;
     }
 
+    protected Person() {
+    }
+
     public String getName() {
         return name;
     }

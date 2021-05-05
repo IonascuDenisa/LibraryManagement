@@ -1,86 +1,81 @@
-// info about books
-// info about authors
-// info about authors and their books
-// info about all tipes of employees
-// info about each tipe of employee
-// info about cliens
-// info about loans
-
-// the books that are available
-// the books written by contemporary authors
-// the books from one specific literar movement, or all books alphabetically ordered by literar movement
-// the books written by one specific author, or all books orderd by author
-// digital books
-// books orderd by title or search book by title
-// add new book
-// add new loan
-// add employee
+// TODO Loan.DueDate
+// TODO phoneNumbers from csv
 
 package Library;
 
-import java.math.BigDecimal;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class Main {
 
-    public static void main(String[] args) {
-
-        //------Employees
-        Employee lib1 = new Librarian("ana", "32021","unirii", BigDecimal.valueOf(23663));
-        Employee lib2 = new Librarian("mara", "32021","unirii", BigDecimal.valueOf(2300939));
-        Employee r3 = new Registrator("cara", "32021","unirii", BigDecimal.valueOf(230053));
-        Employee r4 =  new Registrator("para", "32021","unirii", BigDecimal.valueOf(2345377));
+    public static void main(String[] args) throws IOException {
+        Read r;
+        r= Read.getInstance();
 
         List<Employee> employees = new ArrayList<>();
-        employees.add(lib1);
-        employees.add(lib2);
-        employees.add(r3);
-        employees.add(r4);
-
-        //------Books
-        Book book1=new Book(3,"Poeme","poezii",500,false);
-        Book book2=new Book(2,"Sarmanul Dionis","nuvela",200,true);
-        Book book3=new Book(1,"Abecedar","manual scolar",160,false);
-
-        List <Book> books = new ArrayList<>();
-        books.add(book1);
-        books.add(book2);
-        books.add(book3);
-
-        // ----Authors
-        Author author1= new Author("Mihai Eminescu","Romantic",1850,1889, books.subList(0,2));
-        Author author2=new Author("Cleopatra Mihailescu",null,0,0,books.subList(2,3));
-        Author author3=new Author("Tudora Pitila",null, 0,0,books.subList(2,3));
-        List<Author> authors = new ArrayList<>();
-        authors.add(author1);
-        authors.add(author2);
-        authors.add(author3);
+        employees = r.readEmployees();
 
 
-        Client c1=new Client("Ana Maria","05462","Victoriei");
-        Client c2=new Client("Ana Pop","05461","Victoriei");
-        Client c3=new Client("Ana Ion","05460","Victoriei");
-        Client c4=new Client("Ana Matei","05464","Victoriei");
 
-        Loan l1=new Loan(books.get(0),c1,(Librarian)lib1);
-        l1.SetAvailability();
-        Loan l2= new Loan(books.get(0),c2,(Librarian)lib1);
-        l2.SetAvailability();
-        Loan l3=new Loan(books.get(1),c3,(Librarian)lib1);
-        l3.SetAvailability();
-        Loan l4= new Loan(books.get(1),c4,(Librarian)lib1);
-        l4.SetAvailability();
+        List<Author> authors =  new ArrayList<>();
 
-        List<Loan> loans = new ArrayList<>();
-        loans.add(l1);
-        loans.add(l2);
-        loans.add(l3);
-        loans.add(l4);
+        authors= r.readAuthors();
+
+        List<Book> books =  new ArrayList<>();
+        books = r.readBooks(authors,employees);
+
+        List<Client> clients= new ArrayList<>();
+        clients=r.readClients();
+
+        List<Loan> loans= new ArrayList<>();
+        loans=r.readLoan(books,clients,employees);
+        System.out.println("nu merge");
+        for(Loan index: loans)
+        {
+            index.print();
+        }
+
+        //System.out.println("       ** Welcome to our library! **          ");
+
+        List<Book> DigitBooks = new ArrayList<>();
+        DigitBooks=Utillity.DigitalAvailable(books);
+
+        System.out.println("Type '1' to add new client");
+        System.out.println("Type '2' to add a new book");
+        System.out.println("Type '3' to add a new loan");
+        Scanner scanner = new Scanner(System.in).useDelimiter(Pattern.compile("[\\n]"));
+        int choice=0;
+        choice= scanner.nextInt();
+        Write w;
+        w=Write.getInstance();
+        if(choice==1)
+        {
+           clients=w.addClient(clients);
+        }
+        if(choice==2){
+           books=w.addBook(authors,books,employees); // also adds new author
+        }
+        if(choice==3){
+            loans=w.addLoan(clients,books,employees,loans);
+        }
+        audit a=new audit(choice);
 
 
-        //Print books sorted by number of pages
-        //Utility.SortByPage(books);
-
-  }
+    }
 }
+/*  Employee e = new Employee();
+    e=e.SearchByDesk(employees,2);
+    System.out.println("+++"+e.getName()+"+++");
+
+    Utillity.PrintCur(books, "Romantic"); //Cautare carte dupa curent literar
+
+    Utillity.SortByPage(books);
+
+     Print books sorted by number of pages: Utillity.SortByPage(books);
+     authors.get(1).AlphabeticalSort(null,authors,1);
+     books.get(1).AlphabeticalSort(books,null,1);
+
+ */

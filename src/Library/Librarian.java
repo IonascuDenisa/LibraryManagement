@@ -1,6 +1,7 @@
 package Library;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public class Librarian extends Employee{
 
@@ -8,6 +9,7 @@ public class Librarian extends Employee{
 
     private static int indexOfficeNumber=0;
 
+    public Librarian(){}
     public Librarian(String name, String phoneNumber, String address, BigDecimal salary) {
         super(name, phoneNumber, address, salary);
         indexOfficeNumber++;
@@ -23,4 +25,5 @@ public class Librarian extends Employee{
         super.print();
         System.out.println("Works at office number: " + OfficeNumber);
     }
+
 }
