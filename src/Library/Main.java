@@ -3,7 +3,13 @@
 
 package Library;
 
+import Library.BD.DataBaseSetUp;
+import Library.BD.SqlConfig;
+
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -11,14 +17,21 @@ import java.util.regex.Pattern;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, SQLException {
+
         Read r;
         r= Read.getInstance();
 
         List<Employee> employees = new ArrayList<>();
         employees = r.readEmployees();
 
+        List<Registrator> reg = new ArrayList<>();
+        reg.add((Registrator) employees.get(2));
+        reg.add((Registrator) employees.get(3));
 
+        List<Librarian> lib = new ArrayList<>();
+        lib.add((Librarian) employees.get(0));
+        lib.add((Librarian) employees.get(1));
 
         List<Author> authors =  new ArrayList<>();
 
@@ -32,38 +45,99 @@ public class Main {
 
         List<Loan> loans= new ArrayList<>();
         loans=r.readLoan(books,clients,employees);
-        System.out.println("nu merge");
-        for(Loan index: loans)
+        /*for(Loan index: loans)
         {
             index.print();
-        }
+        }*/
 
         //System.out.println("       ** Welcome to our library! **          ");
 
         List<Book> DigitBooks = new ArrayList<>();
         DigitBooks=Utillity.DigitalAvailable(books);
 
-        System.out.println("Type '1' to add new client");
-        System.out.println("Type '2' to add a new book");
-        System.out.println("Type '3' to add a new loan");
-        Scanner scanner = new Scanner(System.in).useDelimiter(Pattern.compile("[\\n]"));
+        Connection dataBaseConnection = SqlConfig.getDataBaseConnection();
+       DataBaseSetUp set = new DataBaseSetUp();
+       set.setUp();
+        Functions f = new Functions();
+
+
+        for(Client c: clients){
+            f.AddClientBD(c);
+        }
+        for(Librarian l: lib){
+            f.AddLibrarianBD(l);
+        }
+        for(Registrator regi:reg){
+            f.AddRegistratorBD(regi);
+        }
+        for(Book b: books) {
+            f.AddBooksBD(b);
+        }
+        for(Author au: authors) {
+            f.AddAuthorBD(au);
+        }
+        f.AddAuth_bookBD(books.get(0), authors.get(0));
+        f.AddAuth_bookBD(books.get(1), authors.get(0));
+        f.AddAuth_bookBD(books.get(2), authors.get(1));
+        f.AddAuth_bookBD(books.get(2), authors.get(2));
+        f.AddAuth_bookBD(books.get(3), authors.get(3));
+        f.AddAuth_bookBD(books.get(4), authors.get(4));
+
+        for(Loan l: loans){
+            f.AddLoanBD(l);
+        }
+        //f.deleteLoan(4);
+        //f.deleteOneClient(1);
+       // f.updateClientPhone(2,"074444");
+
+
+        menu m= new menu();
+
+/*
+
+
+
+
+
+
+
+
+
+
+
+
+        System.out.println("press '0' if you want to exit ");
+
+
+        System.out.println("Type '5' to print clients");
+       Scanner scanner = new Scanner(System.in).useDelimiter(Pattern.compile("[\\n]"));
         int choice=0;
         choice= scanner.nextInt();
         Write w;
         w=Write.getInstance();
         if(choice==1)
         {
-           clients=w.addClient(clients);
+            clients=w.addClient(clients);
         }
         if(choice==2){
-           books=w.addBook(authors,books,employees); // also adds new author
+            books=w.addBook(authors,books,employees); // also adds new author
         }
         if(choice==3){
             loans=w.addLoan(clients,books,employees,loans);
         }
+        if(choice ==4) {
+            System.out.print("Type name of the author...");
+            String namee= scanner.next();
+            f.selectAuthorByName(namee);
+        }
+        if(choice == 5){
+            for(Client c : clients){
+                c.print();
+            }
+        }
         audit a=new audit(choice);
-
-
+*/
+        SqlConfig.closeDataBaseConnection();
     }
 }
 /*  Employee e = new Employee();

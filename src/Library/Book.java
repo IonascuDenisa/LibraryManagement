@@ -41,6 +41,7 @@ public class Book implements Sort, SearchBook{
     public Registrator getPersonResponsable() {
         return PersonResponsable;
     }
+    public int getRegistratorDeskNumber() { return PersonResponsable.getDeskNumber();}
 
     public void setPersonResponsable(Registrator personResponsable) {
         PersonResponsable = personResponsable;

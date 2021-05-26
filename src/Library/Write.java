@@ -1,12 +1,15 @@
 package Library;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.stream.StreamSupport;
 
 public class Write { //write to file
+
+    Functions f = new Functions();
 
     private static Write w = null;
 
@@ -19,7 +22,7 @@ public class Write { //write to file
         return w;
     }
 
-    public List<Client> addClient(List<Client> c) throws IOException {
+    public List<Client> addClient(List<Client> c) throws IOException, SQLException {
 
         String path = "D:\\LABORATOARE EAP\\Library\\Clients.csv";
         FileWriter writer=new FileWriter(path,true);

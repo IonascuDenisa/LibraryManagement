@@ -90,6 +90,41 @@ public class Read {// read from file
         return employees;
     }
 
+    public List<Librarian> readLibrarianForBD(List<Librarian> librarians){
+        String path = "D:\\LABORATOARE EAP\\Library\\Librarians.csv";
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(path));
+
+            while((line=br.readLine())!=null){
+                String[] values = line.split(",");
+                Librarian e = new Librarian(values[0], values[1], values[2], BigDecimal.valueOf(valueOf(values[3])));
+                librarians.add(e);
+            }
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return librarians;
+    }
+
+    public List<Registrator> readRegistratorForBD(List<Registrator> registrators){
+        String path = "D:\\LABORATOARE EAP\\Library\\Registrators.csv";
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(path));
+
+            while((line=br.readLine())!=null){
+                String[] values = line.split(",");
+                Registrator e = new Registrator(values[0], values[1], values[2], BigDecimal.valueOf(valueOf(values[3])));
+                registrators.add(e);
+            }
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return registrators;
+    }
     public List<Employee> readRegistrator(List<Employee> employees){
         String path = "D:\\LABORATOARE EAP\\Library\\Registrators.csv";
         try{

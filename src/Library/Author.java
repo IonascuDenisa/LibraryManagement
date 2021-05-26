@@ -7,11 +7,13 @@ import java.util.List;
 
 public class Author implements Sort{
 
+    private int id;
     private String name;
     private String literaryMovement; // if the book it is not literar then this field will be null
     private Boolean isAlive;
     private int birthYear;  // this field can be 0 if there is no info about the author
     private int deathYear; // if the author is alive, the value will be 0;
+    private static int indexId=0;
 
     public Author(){}
     public Author(String name, String literaryMovement, int birthYear, int deathYear) {
@@ -23,6 +25,8 @@ public class Author implements Sort{
             this.isAlive=true;
         else if((deathYear != 0) && (birthYear!=0))
             this.isAlive=false;
+        indexId++;
+        this.id=indexId;
     }
 
     public String getName() {
@@ -63,6 +67,14 @@ public class Author implements Sort{
 
     public void setDeathYear(int deathYear) {
         this.deathYear = deathYear;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void printAuthor(){
